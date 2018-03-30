@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Tree - 树结构</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="Tree - 树结构 - 垂直 - 向下 - 直线" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <style>
+        body {
+            font-size: 16px;
+            line-height: 1.6em;
+        }
+        
+        ul,
+        li {
+            list-style-type: none;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            -webkit-padding-start: 0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            margin-left: 1em;
+        }
+        
+        li {
+            position: relative;
+        }
+        
+        li::after {
+            height: 1.5em;
+            width: 1em;
+            border-style: solid;
+            border-color: #000;
+            border-width: 0 0 1px 1px;
+        }
+        
+        body>ul>li::after {
+            border: none;
+        }
+        
+        li:not(:last-child)::before {
+            height: 100%;
+            width: 1px;
+            background-color: #000;
+        }
+        
+        li:not(:last-child)::before,
+        li::after {
+            top: -1em;
+            left: -2em;
+            position: absolute;
+            content: " ";
+        }
+        
+        span::before {
+            position: absolute;
+            left: -1.2em;
+            top: .3em;
+            content: " ";
+            height: .5em;
+            width: .5em;
+            background-color: #000;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <ul></ul>
+</body>
+
+<script>
+    document.getElementsByTagName('ul')[0].innerHTML = (function getMenuTemplate(node) {
+
+        if (!node.list || node.list.length <= 0) {
+            return "<li><span>" + node.name + "</span></li>";
+        }
+        var template = "<ul>";
+        var flag;
+        for (flag = 0; flag < node.list.length; flag++) {
+            template += getMenuTemplate(node.list[flag]);
+        }
+        template += "</ul>";
+        return "<li><span>" + node.name + "</span>" + template + "</li>";
+
+    })({
+        "name": "前端工程师",
+        "list": [{
+            "name": "核心",
+            "list": [{
+                "name": "HTML",
+                "list": [{
+                    "name": "标签"
+                }, {
+                    "name": "IndexDB 数据库"
+                }, {
+                    "name": "Web Sql 数据库"
+                }, {
+                    "name": "Storage 存储"
+                }, {
+                    "name": "Web Workers"
+                }, {
+                    "name": "SVG"
+                }, {
+                    "name": "Canvas"
+                }]
+            }, {
+                "name": "CSS",
+                "list": [{
+                    "name": "预处理语言",
+                    "list": [{
+                        "name": "Less"
+                    }, {
+                        "name": "Sass"
+                    }]
+                }, {
+                    "name": "后处理语言",
+                    "list": [{
+                        "name": "postCSS"
+                    }]
+                }, {
+                    "name": "属性"
+                }]
+            }, {
+                "name": "ECMAScript"
+            }]
+        }, {
+            "name": "安全"
+        }, {
+            "name": "算法",
+            "list": [{
+                "name": "基本思想",
+                "list": [{
+                    "name": "分治与递归"
+                }, {
+                    "name": "回溯法"
+                }, {
+                    "name": "分支限界法"
+                }, {
+                    "name": "贪心算法"
+                }]
+            }, {
+                "name": "设计模式"
+            }]
+        }, {
+            "name": "工具"
+        }, {
+            "name": "计算机知识",
+            "list": [{
+                "name": "计算机网络"
+            }, {
+                "name": "操作系统"
+            }, {
+                "name": "数据结构"
+            }, {
+                "name": "计算机组成原理"
+            }, {
+                "name": "计算机体系结构"
+            }, {
+                "name": "编译原理"
+            }]
+        }, {
+            "name": "标准/规范"
+        }, {
+            "name": "框架/库",
+            "list": [{
+                "name": "库"
+            }, {
+                "name": "框架",
+                "list": [{
+                    "name": "AngularJS"
+                }, {
+                    "name": "Angular"
+                }, {
+                    "name": "React"
+                }, {
+                    "name": "Vue"
+                }]
+            }]
+        }]
+    });
+</script>
+
+</html>
