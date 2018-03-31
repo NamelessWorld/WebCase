@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Animation - 动画效果</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="Animation - 动画效果 - bezier - 贝塞尔" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <style>
+        body {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0a0a0a;
+        }
+        
+        .control {
+            fill: #ccc;
+            stroke: #ccc;
+            stroke-width: .5px;
+            cursor: move;
+        }
+        
+        .line {
+            fill: none;
+            stroke-width: 1px;
+            stroke: #cccbcc;
+        }
+        
+        .bezier {
+            fill: none;
+            stroke-width: 3px;
+            stroke: rgb(248, 250, 249);
+        }
+    </style>
+</head>
+
+<body></body>
+
+<script>
+    //获取颜色方法（供给线条使用）
+    var colors = ['#f60838', '#f608e7', '#6b08f6', '#0855f6', '#08cef6', '#08f685', '#ebf608', '#f67d08'];
+
+    function getLineColor(l) {
+        return colors[Math.floor(l % colors.length - 1)];
+    };
+
+
+    //获取元素大小(内容+内边距+边框)
+    function getES(node) {
+        return {
+            width: node.offsetWidth,
+            height: node.offsetHeight
+        }
+    }
+
+    //这是一个自定义的定时器
+    var animation = function(doback, callback) {
+        var deep, createTime = new Date();
+        window.intervalId = window.setInterval(function() {
+            deep = (+new Date() - createTime) / 4000;
+
+            deep = deep > 1 ? 1 : deep;
+            doback(deep);
+            if (deep >= 1) {
+                createTime = new Date();
+                callback();
+            }
+        }, 4);
+    }
+
+    //下面开始编写
+
+    //预处理
+    var bodySize = getES(document.getElementsByTagName('body')[0]);
+    var points = [
+        [0, 346],
+        [0, 700],
+        [400, 300],
+        [300, 600],
+        [700, 400],
+        [160, 169],
+        [84, 42],
+        [0, 94]
+    ];
+    var svgTemplate = "<svg width=" + bodySize.width + " height=" + bodySize.height + ">";
+    svgTemplate += "<g transform='translate(10,10)'>";
+    var flag;
+
+    svgTemplate += "<path class='line' d='M" + points[0][0] + " " + points[0][1] + " L";
+    for (flag = 1; flag < points.length - 1; flag++) {
+        svgTemplate += points[flag][0] + " " + points[flag][1] + ",";
+    }
+    svgTemplate += points[flag][0] + " " + points[flag][1];
+    svgTemplate += "'></path>";
+
+    for (flag = 0; flag < points.length; flag++) {
+        svgTemplate += '<circle class="control" r="7" cx=' + points[flag][0] + ' cy=' + points[flag][1] + '></circle>';
+    }
+    svgTemplate += "<g id='animationBezier'></g>";
+    svgTemplate += "<g id='animationLine'></g>";
+    svgTemplate += "</g>";
+    svgTemplate += "</svg>";
+    var sFrame = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+    sFrame.innerHTML = svgTemplate;
+    document.getElementsByTagName('body')[0].insertBefore(sFrame.childNodes[0], document.getElementsByTagName('body')[0].childNodes[0]);
+
+    //动画效果
+
+    var bezierLine = "M" + points[0][0] + " " + points[0][1] + "L";
+    animation(function(deep) {
+        document.getElementById('animationLine').innerHTML = "";
+        var animTemplate = (function getAnimTemplate(tPoints) {
+            var nPoints = [],
+                tTemplate = "";
+            for (flag = 0; flag < tPoints.length - 1; flag++) {
+                nPoints.push([(tPoints[flag + 1][0] - tPoints[flag][0]) * deep + tPoints[flag][0], (tPoints[flag + 1][1] - tPoints[flag][1]) * deep + tPoints[flag][1]]);
+            }
+            if (nPoints.length > 1) {
+                var flag2;
+                var color = getLineColor(points.length - tPoints.length);
+
+                tTemplate += "<path style='stroke:" + color + ";' class='line' d='M" + nPoints[0][0] + " " + nPoints[0][1] + " L";
+                for (flag2 = 1; flag2 < nPoints.length - 1; flag2++) {
+                    tTemplate += nPoints[flag2][0] + " " + nPoints[flag2][1] + ",";
+                }
+                tTemplate += nPoints[flag2][0] + " " + nPoints[flag2][1];
+                tTemplate += "'></path>";
+
+                for (flag2 = 0; flag2 < nPoints.length; flag2++) {
+                    tTemplate += '<circle class="control" style="stroke:' + color + ';fill:' + color + ';" r="7" cx=' + nPoints[flag2][0] + ' cy=' + nPoints[flag2][1] + '></circle>';
+                }
+
+                tTemplate += getAnimTemplate(nPoints);
+            } else if (nPoints.length = 1) {
+                var color = getLineColor(points.length - tPoints.length);
+                tTemplate += '<circle class="control" style="stroke:' + color + ';fill:' + color + ';" r="7" cx=' + nPoints[0][0] + ' cy=' + nPoints[0][1] + '></circle>';
+
+                bezierLine += nPoints[0][0] + " " + nPoints[0][1] + ",";
+                sFrame.innerHTML = "<path class='bezier' d='" + bezierLine.replace(/,$/, '') + "'></path>";
+                document.getElementById('animationBezier').innerHTML = "";
+                document.getElementById('animationBezier').insertBefore(sFrame.childNodes[0], document.getElementById('animationBezier').childNodes[0]);
+            }
+            return tTemplate;
+        })(points);
+        sFrame.innerHTML = "<g>" + animTemplate + "</g>";
+        document.getElementById('animationLine').insertBefore(sFrame.childNodes[0], document.getElementById('animationLine').childNodes[0]);
+    }, function() {
+        bezierLine = "M" + points[0][0] + " " + points[0][1] + "L";
+    });
+</script>
+
+</html>
+
+<!--
+
+    开发时间：2018-03-31
+    项目地址：https://github.com/yelloxing/WebCase
+
+-->
