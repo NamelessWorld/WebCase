@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Tree - 树结构</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="Tree - 树结构 - 水平 - 向左 - 直线" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <style>
+        body {
+            font-size: 12px;
+            line-height: 1.6em;
+            background-color: #009688;
+            margin: 0;
+            overflow: scroll;
+        }
+        
+        ul,
+        li {
+            list-style-type: none;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            -webkit-padding-start: 0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            white-space: nowrap;
+            margin-top: 100px;
+        }
+        
+        ul>li {
+            display: inline-block;
+            vertical-align: top;
+        }
+        
+        ul>li>span {
+            background-color: #c7d0cf;
+            border-radius: 20px;
+            padding: 10px;
+            position: relative;
+            margin-left: 2em;
+            color: #009688;
+        }
+        
+        ul>li>span::before {
+            content: " ";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-color: #c7d0cf;
+            border-radius: 50%;
+            position: absolute;
+            left: -1em;
+            top: 1em;
+            z-index: 1;
+        }
+        
+        body>svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        body>ul {
+            position: relative;
+            left: 100px;
+            text-align: left;
+        }
+        
+        body>ul>li {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <span>
+                生物
+            </span>
+            <ul>
+                <li>
+                    <span>
+                        动物
+                    </span>
+                    <ul>
+                        <li>
+                            <span>食肉动物</span>
+                            <ul>
+                                <li>
+                                    <span>老鼠</span>
+                                </li>
+                                <li>
+                                    <span>丹顶鹤</span>
+                                </li>
+                                <li>
+                                    <span>蛇</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>食草动物</span>
+                        </li>
+                        <li>
+                            <span>杂食动物</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>
+                        植物
+                    </span>
+                    <ul>
+                        <li>
+                            <span>牡丹花</span>
+                        </li>
+                        <li>
+                            <span>杜鹃花</span>
+                        </li>
+                        <li>
+                            <span>丁香花</span>
+                        </li>
+                        <li>
+                            <span>圣罗兰</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>
+                        微生物
+                    </span>
+                    <ul>
+                        <li>
+                            <span>原生生物</span>
+                            <ul>
+                                <li>
+                                    <span>病毒</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</body>
+
+<script>
+    //获取元素距离body的位置
+    function getEP(node) {
+        var left = 0;
+        var top = 0;
+        top = node.offsetTop;
+        left = node.offsetLeft;
+        while (node = node.offsetParent) {
+            top += node.offsetTop;
+            left += node.offsetLeft;
+        }
+        return {
+            left: left,
+            top: top
+        };
+    }
+    //获取元素大小(内容+内边距+边框和滚动的宽（不包括border） 的最大尺寸）
+    function getES(node) {
+        return {
+            width: node.offsetWidth > node.scrollWidth ? node.offsetWidth : node.scrollWidth,
+            height: node.offsetHeight > node.scrollHeight ? node.offsetHeight : node.scrollHeight
+        }
+    }
+    //获取指定结点类型的孩子
+    function getNC(node, nType) {
+        if (!node) {
+            return [];
+        }
+        var children = [],
+            tempResult = node.childNodes,
+            flag;
+        for (flag = 0; flag < tempResult.length; flag++) {
+            if (tempResult[flag].nodeType === 1 || tempResult[flag].nodeType === 11 || tempResult[flag].nodeType === 9) {
+                if (tempResult[flag].tagName == (nType + "").toUpperCase() || tempResult[flag].tagName == (nType + "").toLowerCase()) {
+                    children.push(tempResult[flag]);
+                }
+            }
+        }
+        return children;
+    }
+
+    //计算曲线
+    var paths = "";
+    (function loadLine(li) {
+
+        var ul = getNC(li, 'ul')[0];
+        var lis = getNC(ul, 'li');
+        var self_position = getEP(getNC(li, 'span')[0]);
+        var ls_positon;
+        var flag;
+        for (flag = 0; flag < lis.length; flag++) {
+            ls_positon = getEP(getNC(lis[flag], 'span')[0]);
+
+            var y = {
+                left: self_position.left - 6,
+                top: self_position.top + 22
+            };
+            var x = {
+                left: ls_positon.left - 6,
+                top: ls_positon.top + 22
+            };
+            paths += '<path d="M' + y.left + ' ' + y.top + 'C' + y.left + ',' + (x.top + y.top) / 2 + ' ' + x.left + ',' + (y.top + x.top) / 2 + ' ' + x.left + ',' + x.top + '" stroke="#ccc" stroke-width="1.5 px" fill="none"></path>';
+            loadLine(lis[flag]);
+        }
+
+    })(document.getElementsByTagName('li')[0]);
+
+    //插入页面
+    var size = getES(document.getElementsByTagName('ul')[0]);
+    var sFrame = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+    sFrame.innerHTML = '<svg width="' + size.width + '" height="' + (size.height - (-100)) + '">' + paths + '</svg>';
+    document.getElementsByTagName('body')[0].insertBefore(sFrame.childNodes[0], document.getElementsByTagName('body')[0].childNodes[0]);
+</script>
+
+</html>
