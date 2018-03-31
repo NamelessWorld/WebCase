@@ -17,7 +17,8 @@
     <style>
         body {
             font-size: 16px;
-            line-height: 1.6em;
+            line-height: 5em;
+            background-color: #1b1818;
         }
         
         ul,
@@ -31,7 +32,7 @@
         }
         
         ul {
-            margin-left: 1em;
+            margin-left: 5em;
         }
         
         li {
@@ -39,10 +40,10 @@
         }
         
         li::after {
-            height: 1.5em;
-            width: 1em;
+            height: 4em;
+            width: 5em;
             border-style: solid;
-            border-color: #000;
+            border-color: #c7d0cf;
             border-width: 0 0 1px 1px;
         }
         
@@ -53,25 +54,38 @@
         li:not(:last-child)::before {
             height: 100%;
             width: 1px;
-            background-color: #000;
+            background-color: #c7d0cf;
         }
         
         li:not(:last-child)::before,
         li::after {
-            top: -1em;
-            left: -2em;
+            top: -1.5em;
+            left: -6em;
             position: absolute;
             content: " ";
+            border-radius: 0 0 0 50%;
+        }
+        
+        span {
+            border-radius: 50%;
+            width: 4em;
+            height: 4em;
+            display: inline-block;
+            line-height: 4em;
+            text-align: center;
+            background-color: #c7d0cf;
+            color: #838887;
+            box-shadow: inset 0 0 20px 3px #1d1818;
         }
         
         span::before {
             position: absolute;
-            left: -1.2em;
-            top: .3em;
+            left: -2em;
+            top: 1.5em;
             content: " ";
-            height: .5em;
-            width: .5em;
-            background-color: #000;
+            height: 2em;
+            width: 2em;
+            background-color: #c7d0cf;
             border-radius: 50%;
         }
     </style>
@@ -96,99 +110,43 @@
         return "<li><span>" + node.name + "</span>" + template + "</li>";
 
     })({
-        "name": "前端工程师",
+        "name": "前端",
         "list": [{
             "name": "核心",
             "list": [{
-                "name": "HTML",
+                "name": "计算机",
                 "list": [{
-                    "name": "标签"
-                }, {
-                    "name": "IndexDB 数据库"
-                }, {
-                    "name": "Web Sql 数据库"
-                }, {
-                    "name": "Storage 存储"
-                }, {
-                    "name": "Web Workers"
-                }, {
-                    "name": "SVG"
-                }, {
-                    "name": "Canvas"
-                }]
-            }, {
-                "name": "CSS",
-                "list": [{
-                    "name": "预处理语言",
+                    "name": "算法",
                     "list": [{
-                        "name": "Less"
+                        "name": "思想",
+                        "list": [{
+                            "name": "分治"
+                        }, {
+                            "name": "回溯"
+                        }, {
+                            "name": "限界"
+                        }, {
+                            "name": "贪心"
+                        }]
                     }, {
-                        "name": "Sass"
+                        "name": "模式"
                     }]
-                }, {
-                    "name": "后处理语言",
-                    "list": [{
-                        "name": "postCSS"
-                    }]
-                }, {
-                    "name": "属性"
                 }]
             }, {
-                "name": "ECMAScript"
+                "name": "HTML"
+            }, {
+                "name": "CSS"
+            }, {
+                "name": "ES"
             }]
         }, {
             "name": "安全"
         }, {
-            "name": "算法",
-            "list": [{
-                "name": "基本思想",
-                "list": [{
-                    "name": "分治与递归"
-                }, {
-                    "name": "回溯法"
-                }, {
-                    "name": "分支限界法"
-                }, {
-                    "name": "贪心算法"
-                }]
-            }, {
-                "name": "设计模式"
-            }]
-        }, {
             "name": "工具"
         }, {
-            "name": "计算机知识",
-            "list": [{
-                "name": "计算机网络"
-            }, {
-                "name": "操作系统"
-            }, {
-                "name": "数据结构"
-            }, {
-                "name": "计算机组成原理"
-            }, {
-                "name": "计算机体系结构"
-            }, {
-                "name": "编译原理"
-            }]
+            "name": "规范"
         }, {
-            "name": "标准/规范"
-        }, {
-            "name": "框架/库",
-            "list": [{
-                "name": "库"
-            }, {
-                "name": "框架",
-                "list": [{
-                    "name": "AngularJS"
-                }, {
-                    "name": "Angular"
-                }, {
-                    "name": "React"
-                }, {
-                    "name": "Vue"
-                }]
-            }]
+            "name": "库"
         }]
     });
 </script>
