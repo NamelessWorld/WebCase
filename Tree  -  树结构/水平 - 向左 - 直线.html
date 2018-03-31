@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Tree - 树结构</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="Tree - 树结构 - 水平 - 向左 - 直线" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <style>
+        body {
+            font-size: 12px;
+            line-height: 1.6em;
+            margin-right: 100px;
+            background-color: #1b1818;
+        }
+        
+        ul,
+        li {
+            list-style-type: none;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            -webkit-padding-start: 0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            white-space: nowrap;
+            text-align: right;
+            margin-top: 100px;
+        }
+        
+        li {
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+        }
+        
+        li:not(:last-child)::before {
+            border-top-left-radius: 20px;
+        }
+        
+        li:last-child::before {
+            border-width: 0 0 0 1px;
+        }
+        
+        li::before,
+        li:not(:first-child)::after {
+            content: " ";
+            display: inline-block;
+            position: absolute;
+            top: -100px;
+        }
+        
+        li::before {
+            width: 50px;
+            height: 100px;
+            border-style: solid;
+            border-color: #c7d0cf;
+            border-width: 1px 0 0 1px;
+            right: -15px;
+        }
+        
+        li:not(:first-child)::after {
+            height: 1px;
+            width: 100%;
+            background-color: #c7d0cf;
+            right: 15px;
+        }
+        
+        li:not(:first-child):last-child:after {
+            width: calc(100% - 30px);
+            right: 35px;
+        }
+        
+        body>ul>li::before {
+            display: none;
+        }
+        
+        ul>li>span {
+            background-color: #607D8B;
+            border-radius: 50%;
+            padding: 10px;
+            width: 50px;
+            line-height: 50px;
+            display: inline-block;
+            text-align: center;
+            position: relative;
+            color: #c7d0cf;
+            border: 1px solid #c7d0cf;
+        }
+        
+        ul>li>span::after,
+        ul>li>span::before {
+            content: " ";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-color: #c7d0cf;
+            border-radius: 50%;
+            position: absolute;
+            left: 29px;
+            z-index: 1;
+        }
+        
+        ul>li>span::after {
+            bottom: -10px;
+        }
+        
+        ul>li>span::before {
+            top: -10px;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <span>OS</span>
+            <ul>
+                <li>
+                    <span>NOS</span>
+                    <ul>
+                        <li>
+                            <span>BSD</span>
+                        </li>
+                        <li>
+                            <span>Unix</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>DOS</span>
+                    <ul>
+                        <li>
+                            <span>Unix</span>
+                            <ul>
+                                <li>
+                                    <span>Mac OS X</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Windows</span>
+                        </li>
+                        <li>
+                            <span>Linux</span>
+                            <ul>
+                                <li>
+                                    <span>openSUSE</span>
+                                </li>
+                                <li>
+                                    <span>Centos</span>
+                                </li>
+                                <li>
+                                    <span>Ubuntu</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>SOS</span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</body>
+
+</html>
