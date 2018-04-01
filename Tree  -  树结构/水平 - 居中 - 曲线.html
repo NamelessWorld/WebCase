@@ -73,7 +73,7 @@
         
         body>ul {
             position: relative;
-            left: 100px;
+            left: 0;
             text-align: left;
         }
         
@@ -173,13 +173,6 @@
             top: top
         };
     }
-    //获取元素大小(内容+内边距+边框和滚动的宽（不包括border） 的最大尺寸）
-    function getES(node) {
-        return {
-            width: node.offsetWidth > node.scrollWidth ? node.offsetWidth : node.scrollWidth,
-            height: node.offsetHeight > node.scrollHeight ? node.offsetHeight : node.scrollHeight
-        }
-    }
     //获取指定结点类型的孩子
     function getNC(node, nType) {
         if (!node) {
@@ -225,9 +218,8 @@
     })(document.getElementsByTagName('li')[0]);
 
     //插入页面
-    var size = getES(document.getElementsByTagName('ul')[0]);
     var sFrame = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
-    sFrame.innerHTML = '<svg width="' + size.width + '" height="' + (size.height - (-100)) + '">' + paths + '</svg>';
+    sFrame.innerHTML = '<svg width="940" height="500">' + paths + '</svg>';
     document.getElementsByTagName('body')[0].insertBefore(sFrame.childNodes[0], document.getElementsByTagName('body')[0].childNodes[0]);
 </script>
 
