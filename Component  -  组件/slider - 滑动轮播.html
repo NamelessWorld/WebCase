@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Component - 组件</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="Component  -  组件 - slider - 滑动轮播" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        ul {
+            display: inline-block;
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            white-space: nowrap;
+            font-size: 0;
+            /* 去掉一些不友好的默认设置 */
+            -webkit-padding-start: 0;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+        }
+        
+        ul::-webkit-scrollbar {
+            /* 去掉滚动条 */
+            width: 0;
+            height: 0;
+        }
+        
+        li {
+            display: inline-block;
+            width: 100vw;
+            line-height: 100vh;
+            text-align: center;
+            font-size: 30px;
+            color: #fff;
+        }
+    </style>
+
+</head>
+
+<body onResize='doReset()'>
+    <ul>
+        <li style='background-color: rgb(245, 113, 4);'>
+            NO.1
+        </li>
+        <li style='background-color: rgb(201, 245, 8);'>
+            NO.2
+        </li>
+        <li style='background-color: rgb(9, 243, 79);'>
+            NO.3
+        </li>
+        <li style='background-color: rgb(10, 154, 238);'>
+            NO.4
+        </li>
+        <li style='background-color: rgb(42, 8, 240);'>
+            NO.5
+        </li>
+        <li style='background-color: rgb(155, 4, 241);'>
+            NO.6
+        </li>
+        <li style='background-color: rgb(247, 8, 79);'>
+            NO.7
+        </li>
+    </ul>
+</body>
+
+<script>
+    /*添加绑定事件*/
+    function bind(node, eventType, callback) {
+        if (window.attachEvent) {
+            node.attachEvent("on" + eventType, callback);
+        } else {
+            node.addEventListener(eventType, callback, false);
+        }
+    }
+    /*获取元素渲染后的样式值*/
+    function getStyle(node, styleName) {
+        if (document.defaultView && document.defaultView.getComputedStyle) {
+            return document.defaultView.getComputedStyle(node, null).getPropertyValue(styleName); //第二个参数是伪类
+        } else {
+            return node.currentStyle.getPropertyValue(styleName);
+        }
+    }
+    /*获取元素大小*/
+    function size(node, type) {
+        var elemHeight, elemWidth;
+        if (type == 'content') { //内容
+            elemWidth = node.clientWidth - ((getStyle(node, 'padding-left') + "").replace('px', '')) - ((getStyle(node, 'padding-right') + "").replace('px', ''));
+            elemHeight = node.clientHeight - ((getStyle(node, 'padding-top') + "").replace('px', '')) - ((getStyle(node, 'padding-bottom') + "").replace('px', ''));
+        } else if (type == 'padding') { //内容+内边距
+            elemWidth = node.clientWidth;
+            elemHeight = node.clientHeight;
+        } else if (type == 'border') { //内容+内边距+边框
+            elemWidth = node.offsetWidth;
+            elemHeight = node.offsetHeight;
+        } else if (type == 'scroll') { //滚动的宽（不包括border）
+            elemWidth = node.scrollWidth;
+            elemHeight = node.scrollHeight;
+        } else {
+            elemWidth = node.offsetWidth;
+            elemHeight = node.offsetHeight;
+        }
+        return {
+            width: elemWidth,
+            height: elemHeight
+        };
+    }
+
+    /* 取消冒泡事件 */
+    function cancelBubble(event) {
+        event = event || window.event;
+        if (event && event.stopPropagation) { //这是其他非IE浏览器
+            event.stopPropagation();
+        } else {
+            event.cancelBubble = true;
+        }
+    }
+
+    /* 阻止默认事件 */
+    function preventDefault(event) {
+        event = event || window.event;
+        if (event && event.stopPropagation) { //这是其他非IE浏览器
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        }
+    }
+
+    // 获取结点自己的HTML
+    function outerHTML(node) {
+        return (
+            node.outerHTML ||
+            (function(n) {
+                var div = document.createElement('div'),
+                    h;
+                div.appendChild(n);
+                h = div.innerHTML;
+                div = null;
+                return h;
+            })(node)
+        );
+    }
+
+    //获取第一个手指在页面中的坐标
+    function getTouchPos(event) {
+        event = event || window.event;
+        return {
+            'x': event.targetTouches[0].pageX,
+            'y': event.targetTouches[0].pageY
+        };
+    }
+
+    //恢复
+    function doReset() {
+        element.scrollLeft = size(targets[0], 'border').width;
+    }
+
+    // 记录是否可以滑动
+    var canMove = true;
+    var isEffMove = false;
+    // 滑动开始和结束辅助计算
+    var beginPosition, disPositon;
+    // 滑动过程辅助计算
+    var preTouchPosX, scrollLeft;
+
+    // 初始化位置
+    var targets = document.getElementsByTagName('li'),
+        element = document.getElementsByTagName('ul')[0];
+    element.innerHTML = outerHTML(targets[targets.length - 1]) + element.innerHTML + outerHTML(targets[0]);
+    doReset();
+
+    // 添加事件处理
+    var flag;
+    for (flag = 0; flag < targets.length; flag++) {
+        (function(flag) {
+            bind(targets[flag], 'touchstart', function(event) {
+                if (!canMove) return;
+                cancelBubble(event);
+                preventDefault(event);
+                beginPosition = element.scrollLeft;
+                preTouchPosX = getTouchPos(event).x;
+            });
+            bind(targets[flag], 'touchmove', function(event) {
+                if (!canMove) return;
+                cancelBubble(event);
+                preventDefault(event);
+                // 不使用默认的滑动，自己使用，为了避免惯性问题的出现
+                element.scrollLeft = element.scrollLeft - (getTouchPos(event).x - preTouchPosX);
+                preTouchPosX = getTouchPos(event).x;
+            });
+            bind(targets[flag], 'touchend', function(event) {
+                if (!canMove) return;
+                canMove = false;
+                cancelBubble(event);
+                preventDefault(event);
+                disPositon = element.scrollLeft - beginPosition;
+                scrollLeft = element.scrollLeft;
+                if (disPositon > 0) { //手指按下向左边滑动
+                    (function(doback, callback) {
+                        //这是一个定时函数
+                        var deep, createTime = new Date();
+                        window.intervalId = window.setInterval(function() {
+                            deep = (+new Date() - createTime) / 400;
+                            deep = deep > 1 ? 1 : deep;
+                            doback(deep);
+                            if (deep >= 1) {
+                                createTime = new Date();
+                                callback();
+                            }
+                        }, 13);
+                    })(function(deep) {
+                        element.scrollLeft = scrollLeft + (size(targets[0], 'border').width - disPositon) * deep;
+                    }, function() {
+                        window.clearInterval(window.intervalId);
+                        element.scrollLeft = scrollLeft + size(targets[0], 'border').width - disPositon;
+
+                        // 复位
+                        if (element.scrollLeft >= (targets.length - 1.5) * size(targets[0], 'border').width) {
+                            element.scrollLeft = size(targets[0], 'border').width;
+                        }
+                        canMove = true;
+                    });
+
+                } else { //手指按下向右边滑动
+
+                    (function(doback, callback) {
+                        //这是一个定时函数
+                        var deep, createTime = new Date();
+                        window.intervalId = window.setInterval(function() {
+                            deep = (+new Date() - createTime) / 400;
+                            deep = deep > 1 ? 1 : deep;
+                            doback(deep);
+                            if (deep >= 1) {
+                                createTime = new Date();
+                                callback();
+                            }
+                        }, 13);
+                    })(function(deep) {
+                        element.scrollLeft = scrollLeft - (size(targets[0], 'border').width + disPositon) * deep;
+                    }, function() {
+                        window.clearInterval(window.intervalId);
+                        element.scrollLeft = scrollLeft - size(targets[0], 'border').width - disPositon;
+
+                        // 复位
+                        if (element.scrollLeft <= 0.5 * size(targets[0], 'border').width) {
+                            element.scrollLeft = (targets.length - 2) * size(targets[0], 'border').width;
+                        }
+                        canMove = true;
+                    });
+                }
+
+            });
+        })(flag);
+    }
+</script>
+
+</html>
+
+<!--
+
+    开发时间：2018-04-08
+    项目地址：https://github.com/yelloxing/WebCase
+
+-->
