@@ -170,11 +170,12 @@
 
     // 记录是否可以滑动
     var canMove = true;
-    var isEffMove = false;
     // 滑动开始和结束辅助计算
     var beginPosition, disPositon;
     // 滑动过程辅助计算
     var preTouchPosX, scrollLeft;
+    // 判断是否在自动滑动中
+    var isAutoMove = false;
 
     // 初始化位置
     var targets = document.getElementsByTagName('li'),
@@ -204,6 +205,7 @@
             bind(targets[flag], 'touchend', function(event) {
                 if (!canMove) return;
                 canMove = false;
+                isAutoMove = true;
                 cancelBubble(event);
                 preventDefault(event);
                 disPositon = element.scrollLeft - beginPosition;
@@ -213,7 +215,7 @@
                         //这是一个定时函数
                         var deep, createTime = new Date();
                         window.intervalId = window.setInterval(function() {
-                            deep = (+new Date() - createTime) / 400;
+                            deep = (+new Date() - createTime) / 300;
                             deep = deep > 1 ? 1 : deep;
                             doback(deep);
                             if (deep >= 1) {
@@ -234,13 +236,13 @@
                         canMove = true;
                     });
 
-                } else { //手指按下向右边滑动
+                } else if (disPositon < 0) { //手指按下向右边滑动
 
                     (function(doback, callback) {
                         //这是一个定时函数
                         var deep, createTime = new Date();
                         window.intervalId = window.setInterval(function() {
-                            deep = (+new Date() - createTime) / 400;
+                            deep = (+new Date() - createTime) / 300;
                             deep = deep > 1 ? 1 : deep;
                             doback(deep);
                             if (deep >= 1) {
