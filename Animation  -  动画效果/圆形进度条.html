@@ -16,6 +16,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
     <style>
         body {
+            margin: 0;
             text-align: center;
             background-color: #607D8B;
         }
@@ -43,13 +44,6 @@
     var endSmileCircleX = r * Math.cos(p * 2 * Math.PI) + 220;
     var endSmileCircleY = r * Math.sin(p * 2 * Math.PI) + 220;
     var svgTemplate = '<svg width="200" height="200" viewBox="0 0 440 440" style="transform: rotate(90deg) rotateY(-180deg);">' +
-        '       <!-- 定义一些渐变或者笔刷 -->' +
-        '       <defs>' +
-        '           <linearGradient x1="1" y1="0" x2="0" y2="0" id="deep">' +
-        '               <stop offset="0%" stop-color="rgb(255,192,0)"></stop>' +
-        '               <stop offset="100%" stop-color="rgb(249,140,33)"></stop>' +
-        '            </linearGradient>' +
-        '        </defs>' +
 
         '        <!-- 圆轨道 -->' +
         '        <circle cx="220" cy="220" r=' + r + ' stroke-width=' + w + ' stroke="rgb(193,193,193)" fill="none"></circle>' +
@@ -57,13 +51,13 @@
         '        <!--弧形进度条-->' +
         '        <g>' +
         '            <g>' +
-        '                <circle cx="220" cy="220" r="' + r + '" stroke-width="' + w + '" stroke="url(\'#deep \')" fill="none"  stroke-dasharray="' + dis + ' ' + grayDis + '">' +
+        '                <circle cx="220" cy="220" r="' + r + '" stroke-width="' + w + '" stroke="rgb(255, 132, 0)" fill="none"  stroke-dasharray="' + dis + ' ' + grayDis + '">' +
         '                    <animate attributeName="stroke-dasharray" from="0 ' + L + '" to="' + dis + ' ' + grayDis + '" begin="0s" dur="' + s + '" repeatCount="1"/>' +
         '                </circle>' +
         '            </g>' +
         '            <!-- 开头小圆环 -->' +
         '            <g>' +
-        '                <circle cx="' + (220 - (-r)) + '" cy="220" r="' + (w / 2) + '" fill="rgb(255,192,0)"></circle>' +
+        '                <circle cx="' + (220 - (-r)) + '" cy="220" r="' + (w / 2) + '" fill="rgb(255, 132, 0)"></circle>' +
         '           </g>' +
         '            <!-- 结束小圆环 -->' +
         '            <g>' +
@@ -77,7 +71,11 @@
         '    </svg>';
     var sFrame = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
     sFrame.innerHTML = svgTemplate;
-    document.getElementsByTagName('body')[0].insertBefore(sFrame.childNodes[0], document.getElementsByTagName('body')[0].childNodes[0]);
+    try {
+        document.getElementsByTagName('body')[0].insertBefore(sFrame.childNodes[0], document.getElementsByTagName('body')[0].childNodes[0]);
+    } catch (e) {
+        document.getElementsByTagName('body')[0].innerHTML = '<div style="line-height:100px;text-align:center;color:red;">非常抱歉，您的浏览器不支持SVG相关操作!</div>';
+    }
 </script>
 
 </html>
