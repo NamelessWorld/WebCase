@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    background-color: #cbd3d2;
+    user-select: none;
+}
+
+body>section {
+    width: 466px;
+    margin: auto;
+    background-color: #000405;
+    padding: 20px 20px 0 20px;
+    box-sizing: border-box;
+    color: gray;
+    margin-top: 100px;
+    border-radius: 20px;
+}
+
+body>section>header {
+    font-size: 0;
+}
+
+body>section>footer {
+    line-height: 45px;
+    position: relative;
+}
+
+body>section>footer>span:first-child {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+    border-style: solid;
+}
+
+.pause {
+    width: 0;
+    height: 0;
+    border-color: #000405 #000405 #000405 white;
+    border-width: 10px 0 10px 15px;
+}
+
+.play {
+    border-width: 0 5px 0 5px;
+    width: 15px;
+    height: 17px;
+    border-color: white;
+}
+
+video {
+    cursor: pointer;
+}
+
+body>section>footer>input[type='range'] {
+    width: 230px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.volume {
+    cursor: pointer;
+}
+
+.volume_num,
+.volume {
+    position: absolute;
+    width: 1em;
+    text-align: center;
+    vertical-align: top;
+    line-height: 1em;
+    top: 0.8em;
+    font-weight: 800;
+}
+
+.volume.minus {
+    right: 3em;
+}
+
+.volume_num {
+    right: 1em;
+    width: 2em;
+}
+
+.volume.add {
+    right: 0;
+}
+
+.volume.add,
+.volume.minus {
+    color: rgb(243, 237, 237);
+}
+
+
+/* 去掉默认滑条样式 */
+
+input[type=range] {
+    -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+
+
+/* 设置轨道样式 */
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 5px;
+    background: #e3e6bd;
+}
+
+input[type=range] {
+    background: #000405;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    height: 11px;
+    width: 11px;
+    margin-top: -3px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+/*
+
+ 开发时间：2018-04-10
+ 项目地址：https://github.com/yelloxing/WebCase
+
+ */

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Media - 媒体</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="Media  -  媒体 - video - 视频播放器" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <section>
+        <header>视频播放器</header>
+        <video id="player" width="426" height="320" onclick='doCtrl()' onTimeupdate='doTimeupdate()' onCanplaythrough='doCanplaythrough()' onEnded='doEnded()'>
+            非常抱歉！您的浏览器不支持H5播放器
+            <source src="./video.mp4"></source>
+        </video>
+        <footer>
+            <span onclick='doCtrl()' id='doCtrl' class='play'>
+                <!-- 控制播放或者暂停按钮 -->
+            </span>
+            <input type="range" value="0" max="100" mmin="0" step="1" id='barCtrl' onChange="doRange()" onInput="doRange()" />
+            <span id='time'>00:00/00:00</span>
+            <span class="volume minus" onClick='doMinus()'>-</span>
+            <span class="volume_num" id="volume">10</span>
+            <span class="volume add" onClick='doAdd()'>+</span>
+        </footer>
+    </section>
+
+</body>
+
+<script src="control.js"></script>
+
+</html>
+
+<!--
+
+    开发时间：2018-04-10
+    项目地址：https://github.com/yelloxing/WebCase
+
+-->
