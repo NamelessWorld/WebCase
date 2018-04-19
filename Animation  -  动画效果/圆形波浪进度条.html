@@ -29,20 +29,20 @@
     // 1.基本设置：圆环轨道半径(圆环中点),圆环的粗细,进度时间和波浪高度
     var r = 170,
         w = 4,
-        s = '4s',
+        s = '3s',
         dis_deep = 0.7;
     // 2.进度：终点位置
-    var p = 0.95;
+    var p = 0.65;
     // 3.辅助计算（可以忽略）
     var l_x, r_x, y, isBig, notBig;
     if (p > 0.5) {
-        y = 220 - (p - 0.5) * r;
+        y = 220 - (p - 0.5) * r * 2;
         isBig = 1;
     } else {
-        y = 220 + (0.5 - p) * r;
+        y = 220 + (0.5 - p) * r * 2;
         isBig = 0;
     }
-    var w_dis = r * Math.sqrt(1 - (p - 0.5) * (p - 0.5));
+    var w_dis = r * Math.sqrt(1 - (p - 0.5) * (p - 0.5) * 4);
     l_x = 220 - w_dis;
     r_x = 220 + w_dis;
 
@@ -51,23 +51,23 @@
         //圆环
         '        <circle cx="220" cy="220" r=' + (r + w * 0.5 + 10) + ' stroke-width=' + w + ' stroke="#f3eeee" fill="#f3eeee"></circle>' +
         //后面的波浪
-        '        <path fill="#1768BB" d="M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y + '">' +
+        '        <path fill="#1768BB" d="M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 140) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 140) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y + '">' +
         '               <animate dur=' + s + ' repeatCount="indefinite" attributeName="d" attributeType="XML" values="' +
-        'M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
-        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + y + ' ' + (0.5 * r_x + 110) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
-        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
-        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + y + ' ' + (0.5 * r_x + 110) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
-        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        'M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 140) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 140) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 120) + ',' + y + ' ' + (0.5 * r_x + 120) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 100) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 100) + ',' + (y + w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 120) + ',' + y + ' ' + (0.5 * r_x + 120) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 140) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 140) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
         '"></animate>' +
         '        </path>' +
         //前面的波浪
-        '        <path fill="#19ABF5" d="M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y + '">' +
+        '        <path fill="#19ABF5" d="M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 70) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 70) + ',' + (y + w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y + '">' +
         '               <animate dur=' + s + ' repeatCount="indefinite" attributeName="d" attributeType="XML" values="' +
-        'M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - -w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        'M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 70) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 70) + ',' + (y - -w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
         ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + y + ' ' + (0.5 * r_x + 110) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
-        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - -w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
-        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + y + ' ' + (0.5 * r_x + 110) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
-        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - -w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 140) + ',' + (y - -w_dis * dis_deep) + ' ' + (0.5 * r_x + 140) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 100) + ',' + y + ' ' + (0.5 * r_x + 100) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 70) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 70) + ',' + (y - -w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
         '"></animate>' +
         '        </path>' +
         '    </svg>';
