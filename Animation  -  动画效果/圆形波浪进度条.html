@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>动画效果 - 圆形波浪进度条</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="Animation - 动画效果 - 圆形波浪进度条" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <style>
+        body {
+            margin: 0;
+            text-align: center;
+            background-color: #d6d5d3;
+        }
+    </style>
+</head>
+
+<body></body>
+
+<script>
+    // 1.基本设置：圆环轨道半径(圆环中点),圆环的粗细,进度时间和波浪高度
+    var r = 170,
+        w = 4,
+        s = '4s',
+        dis_deep = 0.7;
+    // 2.进度：终点位置
+    var p = 0.95;
+    // 3.辅助计算（可以忽略）
+    var l_x, r_x, y, isBig, notBig;
+    if (p > 0.5) {
+        y = 220 - (p - 0.5) * r;
+        isBig = 1;
+    } else {
+        y = 220 + (0.5 - p) * r;
+        isBig = 0;
+    }
+    var w_dis = r * Math.sqrt(1 - (p - 0.5) * (p - 0.5));
+    l_x = 220 - w_dis;
+    r_x = 220 + w_dis;
+
+    var svgTemplate = '<svg width="700" height="700" viewBox="0 0 440 440">' +
+
+        //圆环
+        '        <circle cx="220" cy="220" r=' + (r + w * 0.5 + 10) + ' stroke-width=' + w + ' stroke="#f3eeee" fill="#f3eeee"></circle>' +
+        //后面的波浪
+        '        <path fill="#1768BB" d="M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y + '">' +
+        '               <animate dur=' + s + ' repeatCount="indefinite" attributeName="d" attributeType="XML" values="' +
+        'M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + y + ' ' + (0.5 * r_x + 110) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + y + ' ' + (0.5 * r_x + 110) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        '"></animate>' +
+        '        </path>' +
+        //前面的波浪
+        '        <path fill="#19ABF5" d="M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y + w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y + '">' +
+        '               <animate dur=' + s + ' repeatCount="indefinite" attributeName="d" attributeType="XML" values="' +
+        'M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - -w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + y + ' ' + (0.5 * r_x + 110) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - -w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + y + ' ' + (0.5 * r_x + 110) + ',' + y + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        ';M ' + l_x + ' ' + y + 'C' + (0.5 * l_x + 110) + ',' + (y - w_dis * dis_deep) + ' ' + (0.5 * r_x + 110) + ',' + (y - -w_dis * dis_deep) + ' ' + r_x + ',' + y + 'A' + r + ' ' + r + ' 0 ' + isBig + ' 1 ' + l_x + ' ' + y +
+        '"></animate>' +
+        '        </path>' +
+        '    </svg>';
+    var sFrame = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+    sFrame.innerHTML = svgTemplate;
+    try {
+        document.getElementsByTagName('body')[0].insertBefore(sFrame.childNodes[0], document.getElementsByTagName('body')[0].childNodes[0]);
+    } catch (e) {
+        document.getElementsByTagName('body')[0].innerHTML = '<div style="line-height:100px;text-align:center;color:red;">非常抱歉，您的浏览器不支持SVG相关操作!</div>';
+    }
+</script>
+
+</html>
+
+<!--
+    开发时间：2018-04-19
+    项目地址：https://github.com/yelloxing/WebCase
+-->
