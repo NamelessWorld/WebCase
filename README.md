@@ -18,6 +18,7 @@
 #### Animation - 动画效果
 *   bezier - 贝塞尔
 *   圆形进度条
+*   圆形波浪进度条
 
 ####  Component - 组件
 *   slider - 滑动轮播
