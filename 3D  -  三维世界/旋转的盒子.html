@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>旋转的盒子</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="3D - 三维世界 - 旋转的盒子" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <script src="../jsmatrix-1.0.0.js"></script>
+</head>
+
+<body>
+    <canvas width="800" height="800" id='canvas'>
+        温馨提示：当前浏览器不支持canvas，试一下最新版本的chromw吧！
+    </canvas>
+</body>
+
+<script>
+    // 初始化盒子数据
+    var boxPosition = [
+        [200, 200, 0],
+        [600, 200, 0],
+        [600, 200, 400],
+        [200, 0, 0],
+        [200, 600, 0],
+        [600, 600, 0],
+        [600, 600, 400],
+        [200, 600, 400]
+    ];
+
+    // 获取画笔
+    var canvas = document.getElementById('canvas');
+    var pen = canvas.getContext('2d');
+
+    // 一些辅助变量
+    var flag;
+
+    // 动画
+    (function (doback) {
+        //这是一个定时函数
+        var deep, createTime = new Date();
+        window.intervalId = window.setInterval(function () {
+            deep = (+new Date() - createTime) / 4000;
+
+            deep = deep > 1 ? 1 : deep;
+            doback(deep);
+            if (deep >= 1) {
+                createTime = new Date();
+            }
+        }, 13);
+    })(function (deep) {
+        // 擦除
+        pen.fillStyle = '#fff';
+        pen.beginPath();
+        pen.rect(0, 0, 800, 800);
+        pen.fill();
+        pen.fillStyle = '#FF0000';
+        pen.strokeStyle = '#FF0000';
+        // 画图
+        (function (bp) {
+            var deg = deep * 2 * Math.PI;
+            var determinant = JsMatrix.Determinant.rotatePY(400, 400, deg).mult(JsMatrix.Determinant.rotatePX(400, 400, deg));
+            var p = [];
+            for (flag = 0; flag < bp.length; flag++) {
+                pen.beginPath();
+                p[flag] = JsMatrix(determinant.value).mult([[bp[flag][0]], [bp[flag][1]], [bp[flag][2]], [1]]).value;
+                pen.arc(p[flag][0]+200, p[flag][1], 5, 0, 2 * Math.PI, false);
+                pen.fill();
+            }
+            // 连线
+            var line = [
+                [1, 2], [2, 3], [3, 4], [4, 1],
+                [5, 6], [6, 7], [7, 8], [8, 5],
+                [1, 5], [2, 6], [3, 7], [4, 8],
+            ];
+            for (flag = 0; flag < line.length; flag++) {
+                pen.beginPath();
+                pen.moveTo(p[line[flag][0] - 1][0]+200, p[line[flag][0] - 1][1]);
+                pen.lineTo(p[line[flag][1] - 1][0]+200, p[line[flag][1] - 1][1]);
+                pen.stroke();
+            }
+        })(boxPosition);
+    });
+</script>
+
+</html>
+
+<!--
+
+    开发时间：2018-04-27
+    项目地址：https://github.com/yelloxing/WebCase
+
+-->
