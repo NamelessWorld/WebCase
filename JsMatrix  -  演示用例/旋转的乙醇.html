@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>旋转的乙醇</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="JsMatrix  -  演示用例 - 旋转的乙醇" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <script src="./jsmatrix-1.0.0.js"></script>
+</head>
+
+<body>
+    <canvas id='canvas' width='1000' height='700'>
+        温馨提示：你的浏览器不支持canvas，可以下载最新版本的chrome试试！
+    </canvas>
+</body>
+
+<script>
+
+    var canvas = document.getElementById('canvas'), pen = canvas.getContext('2d'), flag;
+
+    function drawC(point) {
+        // 画C元素
+        pen.fillStyle = '#000';
+        pen.beginPath();
+        pen.arc(point[0][0], point[0][1], 30, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.beginPath();
+        pen.arc(point[4][0], point[4][1], 30, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.fillStyle = '#fff';
+        pen.fillText("C", point[0][0] - 7, point[0][1] + 7);
+        pen.fillText("C", point[4][0] - 7, point[4][1] + 7);
+    }
+    function drawH(point) {
+
+        // 画H元素
+        pen.fillStyle = '#0f0';
+        pen.beginPath();
+        pen.arc(point[1][0], point[1][1], 20, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.beginPath();
+        pen.arc(point[2][0], point[2][1], 20, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.beginPath();
+        pen.arc(point[3][0], point[3][1], 20, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.beginPath();
+        pen.arc(point[5][0], point[5][1], 20, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.beginPath();
+        pen.arc(point[6][0], point[6][1], 20, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.beginPath();
+        pen.arc(point[8][0], point[8][1], 20, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.fillStyle = '#fff';
+        pen.fillText("H", point[1][0] - 7, point[1][1] + 7);
+        pen.fillText("H", point[2][0] - 7, point[2][1] + 7);
+        pen.fillText("H", point[3][0] - 7, point[3][1] + 7);
+        pen.fillText("H", point[5][0] - 7, point[5][1] + 7);
+        pen.fillText("H", point[6][0] - 7, point[6][1] + 7);
+        pen.fillText("H", point[8][0] - 7, point[8][1] + 7);
+    }
+    function drawO(point) {
+        // 画O元素
+        pen.fillStyle = '#aca';
+        pen.beginPath();
+        pen.arc(point[7][0], point[7][1], 40, 0, 2 * Math.PI);
+        pen.closePath();
+        pen.fill();
+        pen.fillStyle = '#fff';
+        pen.fillText("O", point[7][0] - 7, point[7][1] + 7);
+    }
+
+    function draw(point) {
+        // 背景涂白
+        pen.fillStyle = '#fff';
+        pen.fillRect(0, 0, 1000, 700);
+
+        pen.fillStyle = '#000';
+        pen.font = "20px Georgia";
+        pen.fillText("乙醇：C2H6O", 20, 20);
+
+        // 画线条
+        pen.lineWidth = 16;
+        pen.lineCap = 'round';
+        pen.strokeStyle = '#f00';
+        pen.beginPath();
+        pen.moveTo(point[2][0], point[2][1]);
+        pen.lineTo(point[0][0], point[0][1]);
+        pen.lineTo(point[4][0], point[4][1]);
+        pen.lineTo(point[7][0], point[7][1]);
+        pen.lineTo(point[8][0], point[8][1]);
+        pen.stroke();
+        pen.beginPath();
+        pen.moveTo(point[1][0], point[1][1]);
+        pen.lineTo(point[0][0], point[0][1]);
+        pen.lineTo(point[3][0], point[3][1]);
+        pen.stroke();
+        pen.beginPath();
+        pen.moveTo(point[5][0], point[5][1]);
+        pen.lineTo(point[4][0], point[4][1]);
+        pen.lineTo(point[6][0], point[6][1]);
+        pen.stroke();
+
+    }
+
+    (function (doback) {
+        //这是一个定时函数
+        var deep, createTime = new Date();
+        window.intervalId = window.setInterval(function () {
+            deep = (+new Date() - createTime) / 4000;
+
+            deep = deep > 1 ? 1 : deep;
+            doback(deep, [
+                [250, 280, 0],
+                [260, 200, -50],
+                [240, 200, 50],
+                [200, 400, 0],
+                [400, 340, 0],
+                [370, 400, -50],
+                [370, 400, 50],
+                [500, 150, 0],
+                [600, 200, 0]
+            ]);
+            if (deep >= 1) {
+                createTime = new Date();
+            }
+        }, 13);
+    })(function (deep, p) {
+        for (flag = 0; flag < p.length; flag++) {
+            var jsMatrix = JsMatrix([p[flag]]);
+            jsMatrix.rotatePX(300, 0, deep * 2 * Math.PI).perspectiveOne(300, 300, 500);
+            p[flag] = jsMatrix.value[0];
+        }
+        draw(p);
+        if (deep > 0 && deep < 0.5) {
+            drawC(p);
+            drawH(p);
+        } else {
+            drawH(p);
+            drawC(p);
+        }
+        drawO(p);
+    });
+
+</script>
+
+</html>
+
+<!--
+
+    开发时间：2018-05-02
+    项目地址：https://github.com/yelloxing/WebCase
+
+-->
