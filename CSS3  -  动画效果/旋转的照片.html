@@ -16,22 +16,27 @@
     <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
     <link rel="stylesheet" href="../assets/easycss-1.0.0.css">
     <style>
-        div {
-            perspective: 1000px;
+        body {
+            background-color: #0d0f19;
+        }
+
+        body>div {
+            perspective: 2000px;
             height: 200px;
             margin-top: calc(50vh - 100px);
             margin-left: calc(50vw - 150px);
         }
 
         li {
-            width: 300px;
-            line-height: 200px;
+            width: 100%;
+            line-height: 100%;
             position: absolute;
             transition: opacity 1s, transform 1s;
             background-color: rgba(213, 218, 218, 0.8);
             display: block;
             text-align: center;
             perspective: 1000px;
+            transform-style: preserve-3d;
         }
 
         ul {
@@ -41,8 +46,6 @@
             transform-style: preserve-3d;
             animation: rotate 18s ease-in infinite;
             display: block;
-            background-image: url('../assets/花开物语.jpg');
-            background-size: auto 100%;
         }
 
         li:nth-child(1) {
@@ -98,18 +101,60 @@
                 transform: rotateY(360deg);
             }
         }
+
+        li>div {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            line-height: 200px;
+            left: 0;
+            top: 0;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            border: 3px solid #f0f3f5;
+        }
+
+        li>div:first-child {
+            background-size: cover;
+            transform: rotateY(0deg);
+        }
+
+        li>div:last-child {
+            transform: rotateY(180deg);
+            background: #607D8B;
+            font-size: 30px;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
     <div>
         <ul>
-            <li>第一屏</li>
-            <li>第二屏</li>
-            <li>第三屏</li>
-            <li>第四屏</li>
-            <li>第五屏</li>
-            <li>第六屏</li>
+            <li>
+                <div style='background-image:url("../assets/侧耳倾听.jpg")'></div>
+                <div>侧耳倾听</div>
+            </li>
+            <li>
+                <div style='background-image:url("../assets/四月是你的谎言.jpg")'></div>
+                <div>四月是你的谎言</div>
+            </li>
+            <li>
+                <div style='background-image:url("../assets/日常.jpg")'></div>
+                <div>日常</div>
+            </li>
+            <li>
+                <div style='background-image:url("../assets/花开物语.jpg")'></div>
+                <div>花开物语</div>
+            </li>
+            <li>
+                <div style='background-image:url("../assets/魔女宅急便.jpg")'></div>
+                <div>魔女宅急便</div>
+            </li>
+            <li>
+                <div style='background-image:url("../assets/白箱.jpg")'></div>
+                <div>白箱</div>
+            </li>
         </ul>
     </div>
 </body>
