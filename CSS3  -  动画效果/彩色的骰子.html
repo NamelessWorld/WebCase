@@ -20,10 +20,6 @@
             background-color: #dbe0f7;
         }
 
-        div {
-            padding: 300px;
-        }
-
         li {
             width: 120px;
             line-height: 100px;
@@ -34,12 +30,18 @@
             border: 20px solid #f3f5f6;
             color: white;
             font-size: 30px;
+            left: -60px;
+            top: -60px;
         }
 
         ul {
             position: absolute;
             transform-style: preserve-3d;
-            animation: rotate 6s cubic-bezier(0.34, 0.29, 1, 1) infinite;
+            transform: rotateX(45deg);
+            border: 1px solid red;
+            animation: rotate 3s cubic-bezier(0.34, 0.29, 1, 1) infinite;
+            margin-left: calc(50vw - 60px);
+            margin-top: calc(50vh - 60px);
         }
 
         @keyframes rotate {
