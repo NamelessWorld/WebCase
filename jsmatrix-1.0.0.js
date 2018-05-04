@@ -1,5 +1,5 @@
 /*!
-* [Wed May 02 2018 11:02:01 GMT+0800 (CST)]
+* [Thu May 03 2018 09:15:22 GMT+0800 (CST)]
 */
 /*!
  *
@@ -585,14 +585,14 @@
                     x - z * (x - this.value[0][0]) / (z - this.value[2][0])
                 ], [
                     y - z * (y - this.value[1][0]) / (z - this.value[2][0])
-                ], [0]];
+                ], this.value[2][0]];
             } else if (this.row == 1 && this.col == 3) {
                 this.value = [[
                     x - z * (x - this.value[0][0]) / (z - this.value[0][2])
                     ,
                     y - z * (y - this.value[0][1]) / (z - this.value[0][2])
                     ,
-                    0]];
+                    this.value[0][2]]];
             } else {
                 throw new Error('The coordinate transformation requires a coordinate matrix!');
             }
