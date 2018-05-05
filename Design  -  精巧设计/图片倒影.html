@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>图片倒影</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="Design  -  精巧设计 - 图片倒影" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <link rel="stylesheet" href="../assets/easycss-1.0.0.css">
+    <style>
+        div {
+            width: 490px;
+            height: 300px;
+            margin: auto;
+            position: relative;
+            margin-top: 50px;
+            background-image: url('../assets/魔女宅急便.jpg');
+            background-position: center center;
+            background-size: cover;
+        }
+
+        div::before {
+            content: " ";
+            position: absolute;
+            transform: rotateX(180deg) translateY(-300px);
+            width: inherit;
+            height: inherit;
+            background-image: inherit;
+            background-position: inherit;
+            background-size: inherit;
+            opacity: .9;
+        }
+
+        div::after {
+            content: " ";
+            position: absolute;
+            transform: rotateX(180deg) translateY(-300px);
+            width: inherit;
+            height: inherit;
+            background-image: -webkit-linear-gradient(top, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.68) 60%, rgba(252, 252, 252, 0.25) 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>
+
+<!--
+
+    开发时间：2018-05-05
+    项目地址：https://github.com/yelloxing/WebCase
+
+-->
