@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset='utf-8'>
+    <title>调用系统摄像头</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,maximum-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="Keywords" content="H5  -  新特性 - 调用系统摄像头" />
+    <meta name="author" content="心叶" />
+    <link rel="apple-touch-icon" sizes="52x52" href="52icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="72icon.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="120icon.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="144icon.png" />
+    <style>
+        video {
+            width: 400px;
+            height: 300px;
+            margin: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <video id='video' autoplay="autoplay" onclick='getPicture()'></video>
+</body>
+
+<script>
+
+    //这个方法是获取摄像头拍摄的照片
+    function getPicture() {
+        var canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        var a = document.createElement("a");
+        a.href = canvas.toDataURL("image/png");
+        a.download = '下载图片';
+        a.click();
+    }
+
+    //下面这个方法就是调用系统摄像头
+    var video = document.getElementById('video');
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({
+            'video': {
+                'optional': [{
+                    'sourceId': 0
+                }]
+            },
+            'audio': true
+        }, function (stream) {
+            if (video.mozSrcObject) {
+                video.mozSrcObject = stream;
+            }
+            else {
+                video.src = window.URL && window.URL.createObjectURL(stream) || stream;
+            }
+        }, function () {
+            throw new Error('调用摄像头失败！');
+        });
+    }
+    else {
+        throw new Error('您的浏览器不支持调用摄像头！');
+    }
+</script>
+
+</html>
+
+<!--
+
+    开发时间：2018-05-07
+    项目地址：https://github.com/yelloxing/WebCase
+
+-->
