@@ -34,17 +34,18 @@
     // 3.辅助计算（可以忽略）
     p = p > 1 ? 1 : p;
     p = p < 0 ? 0 : p;
-    var beginOffsetX = r - r * Math.cos(p  * Math.PI);
-    var beginOffsetY = -r * Math.sin(p  * Math.PI);
+    var beginOffsetX = r - r * Math.cos(p * 2 * Math.PI);
+    var beginOffsetY = -r * Math.sin(p * 2 * Math.PI);
+    var isBig = p > 0.5 ? 1 : 0;
     var L = 2 * Math.PI * r;
-    var dis = L * p/2;
+    var dis = L * p;
     var grayDis = L - dis;
-    var endSmileCircleX = r * Math.cos(p  * Math.PI) + 220;
-    var endSmileCircleY = r * Math.sin(p  * Math.PI) + 220;
-    var svgTemplate = '<svg width="700" height="700" viewBox="0 0 440 440" style="transform: rotate(180deg) rotateY(0deg);">' +
+    var endSmileCircleX = r * Math.cos(p * 2 * Math.PI) + 220;
+    var endSmileCircleY = r * Math.sin(p * 2 * Math.PI) + 220;
+    var svgTemplate = '<svg width="700" height="700" viewBox="0 0 440 440" style="transform: rotate(90deg) rotateY(-180deg);">' +
 
         '        <!-- 圆轨道 -->' +
-        '        <circle cx="220" cy="220" r=' + r + ' stroke-width=' + w + ' stroke-dasharray="'+L/2+' '+L/2+'" stroke="rgb(193,193,193)" fill="none"></circle>' +
+        '        <circle cx="220" cy="220" r=' + r + ' stroke-width=' + w + ' stroke="rgb(193,193,193)" fill="none"></circle>' +
 
         '        <!--弧形进度条-->' +
         '        <g>' +
@@ -53,20 +54,16 @@
         '                    <animate attributeName="stroke-dasharray" from="0 ' + L + '" to="' + dis + ' ' + grayDis + '" begin="0s" dur="' + s + '" repeatCount="1"/>' +
         '                </circle>' +
         '            </g>' +
-        '            <!-- 轨道结束小圆环 -->' +
-        '            <g>' +
-        '                <circle cx="50" cy="220" r="' + (w / 2) + '" fill="rgb(193,193,193)"></circle>' +
-        '           </g>' +
         '            <!-- 开头小圆环 -->' +
         '            <g>' +
         '                <circle cx="' + (220 - (-r)) + '" cy="220" r="' + (w / 2) + '" fill="rgb(255, 132, 0)"></circle>' +
         '           </g>' +
         '            <!-- 结束小圆环 -->' +
         '            <g>' +
-        '                <circle cx="' + endSmileCircleX + '" cy="' + endSmileCircleY + '" r="' + (w / 2) + '" fill="rgb(255, 132, 0)" stroke-width="0" stroke="rgb(255, 132, 0)">' +
+        '                <circle cx="' + endSmileCircleX + '" cy="' + endSmileCircleY + '" r="' + (w / 2) + '" fill="rgb(255, 255, 255)" stroke-width="2" stroke="rgb(255, 132, 0)">' +
         '                   <!--轨迹是偏移量，不是绝对定位-->' +
         '                   <!--A的参数方便表示：椭圆二个半轴的长度，椭圆的X轴与水平方向顺时针方向夹角，表示是大弧还是小弧(1表示大角度弧线，0为小角度弧线),确定从起点至终点的方向(1为顺时针，0为逆时针),最后二个是终点偏移距离-->' +
-        '                    <animateMotion path="M' + beginOffsetX + ',' + beginOffsetY + ' A' + r + ' ' + r + ' 0 0 1 0 0" begin="0s" dur="' + s + '" rotate="none" repeatCount="1"/>' +
+        '                    <animateMotion path="M' + beginOffsetX + ',' + beginOffsetY + ' A' + r + ' ' + r + ' 0 ' + isBig + ' 1 0 0" begin="0s" dur="' + s + '" rotate="none" repeatCount="1"/>' +
         '                </circle>' +
         '            </g>' +
         '        </g>' +
